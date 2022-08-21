@@ -32,3 +32,7 @@ let's say for incoming get requests we wanna get access
 to all our feedback objects that were stored and return those as JSON.
 So that in our front end application, we could also send a behind the scenes request
 to fetch all feedback entries and display them on the screen.
+
+## Using API Routes For Pre-Rendering Pages
+
+*** Go-To - Feedback folder in pages folder
