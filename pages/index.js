@@ -1,6 +1,8 @@
-import {useRef} from  'react';
+import {useRef,useState} from  'react';
 
 export default function Home() {
+  const [feedbackItems,setFeedbackItems] = useState([]);
+
   const emailRef = useRef();
   const feedbackRef = useRef();
 
@@ -11,16 +13,6 @@ export default function Home() {
     const enteredFeedback = feedbackRef.current.value;
 
     const reqBody = { email: enteredEmail , feedback:enteredFeedback };
-
-
-    /*
-    So, now we add this object to add metadata to this request, which we're sending, 
-    informing the backend, informing the API route in the end, that this request will 
-    carry JSON data. That is required for the API routes feature for Next.js therefore 
-    to correctly parse the incoming request body, and convert JSON to JavaScript 
-    for us so that we can conveniently access
-    */
-
     fetch('/api/feedback',{
       method: 'POST',
       body: JSON.stringify(reqBody),
@@ -28,6 +20,12 @@ export default function Home() {
         'Content-Type': 'application/json'
       }
     }).then(response => response.json()).then(data => console.log(data));
+  }
+
+  function loadFeedbackHandler(){
+    fetch('/api/feedback')
+    .then(response => response.json())
+    .then(data => setFeedbackItems(data.feedback));
   }
 
   return (
@@ -49,6 +47,22 @@ export default function Home() {
           </div>
 
         </form>
+
+
+        {/* 
+        we typically don't add an API route so that users have to enter them in their URL bar.
+        That's not the user experience we typically wanna offer. Instead, maybe on 
+        localhost:3000, we wanna have a button that loads all the stored feedback items 
+        from that API route
+        */}
+
+        <hr />
+
+        <button onClick={loadFeedbackHandler}>Load Feedback</button>
+
+        <ul>
+          {feedbackItems.map(item => <li key={item.key}>{item.text}</li>)}
+        </ul>
     </div>
   )
 }

@@ -1,14 +1,17 @@
-/*
-inside of the API folder, like this feedback.js file
-we don't export a react component. So in the upper page files,
-we do create a react component and export that as a default.
-We don't do that in API routes.
-*/
 import fs from 'fs';
 import path from 'path';
 
+function buildFeedbackPath(){
+    return path.join(process.cwd(),'data', 'feedback.json');
+}
+
+function extractFeedbackPath(filePath){
+    const fileData = fs.readFileSync(filePath);
+    const data = JSON.parse(fileData);
+    return data;
+}
+
 function  handler(req,res){
-    //checking which req is triggering here
     if(req.method === 'POST'){
         const email = req.body.email;
         const feedbackText = req.body.feedback;
@@ -19,24 +22,24 @@ function  handler(req,res){
             text: feedbackText
         }
     
-    // store new feedback in json file
-    const filePath = path.join(process.cwd(),'data', 'feedback.json');
-    const fileData = fs.readFileSync(filePath);
-    const data = JSON.parse(fileData);
+    const filePath = buildFeedbackPath();
+    const data = extractFeedbackPath(filePath);
     
     data.push(newFeedBack);
     
     fs.writeFileSync(filePath, JSON.stringify(data,0,2));
 
-    //send response
     res.status(201).json({message: 'Success', feedback: newFeedBack});
     } else {
         /*
-        This line of code would also execute though after we go through this if check
-        because function execution does not stop just because we set some response data.
-        Hence, to not send two responses, we should move this code into an else block
+        let's say for incoming get requests we wanna get access
+        to all our feedback objects that were stored and return those as JSON.
         */
-        res.status(200).json({message: 'This Works!'});
+
+        const filePath = buildFeedbackPath();
+        const data = extractFeedbackPath(filePath);
+
+        res.status(200).json({feedback: data});
     }
 }
 

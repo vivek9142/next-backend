@@ -16,3 +16,19 @@ written and getStaticProps and getServerProps would never be exposed to our visi
 ## Interact with frontend by Form
 
 We're making form in index.js and we'll try to interact with backend using this form.
+
+
+##  Using API Routes To Get Data.
+
+If I still enter a request and send it to /api/feedback through the browser URL bar,
+that will automatically be a get request. Therefore, it will not trigger this if block
+or it'll not make it into this if block because the method is not post, but get.
+
+And therefore this line of code will execute which is why we see this response.
+And now that we got this response, of course, let me also make it crystal clear
+that you can also handle incoming get requests in whichever way you want.
+
+let's say for incoming get requests we wanna get access
+to all our feedback objects that were stored and return those as JSON.
+So that in our front end application, we could also send a behind the scenes request
+to fetch all feedback entries and display them on the screen.
