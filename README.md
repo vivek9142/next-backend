@@ -36,3 +36,19 @@ to fetch all feedback entries and display them on the screen.
 ## Using API Routes For Pre-Rendering Pages
 
 *** Go-To - Feedback folder in pages folder
+
+## Creating & Using Dynamic API Route
+
+let's say you don't just wanna have /api/feedback which handles post and get requests,
+but you also wanna support /api/feedback/some feedback ID to just fetched a single piece
+of data for that specific feedback item, because maybe you need that somewhere on your page.
+
+For example, on the feedback page, you could say that for every list item you're rendering here,  you also have like a show details button. And when that button is clicked,
+you wanna show the details for that feedback item. And hence you want to fetch the data,
+the full data for that feedback item.
+
+we already know dynamic pages where you create a page with that square bracket notation, 
+like this. This would then allow for a request sent to /feedback/some-id.And some-id would 
+be interpreted as a value for this ID placeholder and you could then use it inside of that page component and so on.
+
+That's what we already learned before. Now that's for regular pages.We can use a similar feature for API routes,because it's also not unrealistic that we wanna send the request to /api/feedback and then the ID of a specific feedback to then load the data for that specific feedback.
