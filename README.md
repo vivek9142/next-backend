@@ -52,3 +52,12 @@ like this. This would then allow for a request sent to /feedback/some-id.And som
 be interpreted as a value for this ID placeholder and you could then use it inside of that page component and so on.
 
 That's what we already learned before. Now that's for regular pages.We can use a similar feature for API routes,because it's also not unrealistic that we wanna send the request to /api/feedback and then the ID of a specific feedback to then load the data for that specific feedback.
+
+##  Exploring Different Ways Of Structuring API Route Files there are some alternatives to how we name and structure our files inside of the API folder.And those alternatives are equivalent to the different approaches we can use for regular pages.
+
+For example, you can also have catch-all dynamic API routes by adding free dots in front of any placeholder name of your choice. This will then not just handle requests to /API/some value, but also to more segments you might have. Equivalent to what you learned about regular pages and catch-all pages.
+
+It's all important to understand how Next.js prioritizes these different files.
+If we send the request to /API/feedback, it's decode into feedback.js file, it will be executed.Now that is not necessarily obvious because we have this dynamic API route.
+So it could also be possible that requests to /API/feedback are consumed by this file because feedback is simply treated as a concrete value for this feedback ID placeholder.
+But Next.js is smart just as it is for regular pages. And if there is a more specific page for a given path value,so since we have a feedback.js file in this case it will use that more specific file which makes more sense for this kind of path than the more generic dynamic file.
